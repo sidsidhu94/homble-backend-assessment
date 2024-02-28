@@ -2,7 +2,7 @@ from django.conf import settings
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django.core.validators import MinValueValidator
-
+from django.db.models import UniqueConstraint
 
 
 class Product(models.Model):
@@ -68,13 +68,17 @@ class Product(models.Model):
         verbose_name_plural = "Products"
 
 
-
 class Sku(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    size = models.PositiveSmallIntegerField(unique=False, validators=[MinValueValidator(1)])
-    price = models.DecimalField(_('price'), max_digits=10, decimal_places=2)
+    size = models.PositiveSmallIntegerField(
+        unique=False, validators=[MinValueValidator(1)]
+    )
+    price = models.DecimalField(_("price"), max_digits=10, decimal_places=2)
+
+    class Meta:
+        constraints = [
+            UniqueConstraint(fields=["product", "size"], name="unique_product_size")
+        ]
 
     def __str__(self):
         return f"{self.product.name} - {self.size} gm"
-    
-    

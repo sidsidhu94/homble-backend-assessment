@@ -25,8 +25,5 @@ def products_list(request):
     else:
         products = Product.objects.all()
 
-
     serializer = ProductListSerializer(products, many=True)
     return Response({"products": serializer.data}, status=HTTP_200_OK)
-
-
