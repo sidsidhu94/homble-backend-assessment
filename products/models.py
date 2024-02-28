@@ -67,3 +67,5 @@ class Product(models.Model):
         ordering = []
         verbose_name = "Product"
         verbose_name_plural = "Products"
+
+
