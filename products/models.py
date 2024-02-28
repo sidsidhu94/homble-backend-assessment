@@ -71,8 +71,10 @@ class Product(models.Model):
 
 class Sku(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    size = models.PositiveSmallIntegerField(unique=True, validators=[MinValueValidator(1)])
+    size = models.PositiveSmallIntegerField(unique=False, validators=[MinValueValidator(1)])
     price = models.DecimalField(_('price'), max_digits=10, decimal_places=2)
 
     def __str__(self):
         return f"{self.product.name} - {self.size} gm"
+    
+    
