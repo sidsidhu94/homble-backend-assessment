@@ -13,9 +13,20 @@ from .serializers import ProductListSerializer
 @permission_classes([AllowAny])
 def products_list(request):
     """
-    List of all products.
+    List of all products.Handling the refrigerated products based on the query parameter "true" or "false" or no query passed
     """
+    refrigerated_products = request.query_params.get("refrigerated")
+    # refrigerated_params = request.objects.get("refrigerated")
+    if refrigerated_products == "true":
+        products = Product.objects.filter(is_refrigerated=True)
 
-    products = Product.objects.all()
+    elif refrigerated_products == "false":
+        products = Product.objects.filter(is_refrigerated=False)
+    else:
+        products = Product.objects.all()
+
+
     serializer = ProductListSerializer(products, many=True)
     return Response({"products": serializer.data}, status=HTTP_200_OK)
+
+

@@ -1,0 +1,91 @@
+{
+	"info": {
+		"_postman_id": "4dfee72b-c151-4d03-9a0b-03478aaac71a",
+		"name": "Homble_assesment",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "30399316"
+	},
+	"item": [
+		{
+			"name": "1. Extend the Product model and API if refrigerated=false",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8000/products/?refrigerated=false",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"products",
+						""
+					],
+					"query": [
+						{
+							"key": "refrigerated",
+							"value": "false"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "1. Extend the Product model and API if refrigerated=true",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8000/products/?refrigerated=true",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"products",
+						""
+					],
+					"query": [
+						{
+							"key": "refrigerated",
+							"value": "true"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "1. Extend the Product model and API no params passed",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8000/products/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"products",
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

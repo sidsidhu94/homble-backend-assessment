@@ -10,14 +10,14 @@ class ProductAdmin(admin.ModelAdmin):
     search_fields = ("name",)
     list_filter = ("is_refrigerated", "category")
     fields = (
-        ("name", "price"),
+        ("name", "price", "ingredients"),
         ("category", "is_refrigerated"),
         "description",
-        ("id", "created_at"),
+        ("id", "created_at","edited_at"),
         "managed_by",
     )
     autocomplete_fields = ("category", "managed_by")
-    readonly_fields = ("id", "created_at")
+    readonly_fields = ("id", "created_at","edited_at")
 
 
 class ProductInline(admin.StackedInline):

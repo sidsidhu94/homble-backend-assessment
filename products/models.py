@@ -1,6 +1,7 @@
 from django.conf import settings
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+from datetime import datetime
 
 
 class Product(models.Model):
@@ -23,6 +24,13 @@ class Product(models.Model):
         unique=True,
         help_text=_("Few sentences that showcase the appeal of the product"),
     )
+    ingredients = models.CharField(
+        _("ingredients"),
+        max_length=500,
+        help_text=_("ingredients present in the product"),
+        null = True,
+        blank = True,
+    )
     is_refrigerated = models.BooleanField(
         help_text=_("Whether the product needs to be refrigerated"),
         default=False,
@@ -42,6 +50,9 @@ class Product(models.Model):
         on_delete=models.SET_NULL,
     )
     created_at = models.DateTimeField(auto_now_add=True)
+    edited_at = models.DateTimeField(auto_now=True)
+
+    
 
     def save(self, *args, **kwargs):
         self.name = self.name.strip().title()
