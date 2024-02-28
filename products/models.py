@@ -16,10 +16,11 @@ class Product(models.Model):
         unique=True,
         help_text=_("This will be displayed to user as-is"),
     )
-    price = models.PositiveSmallIntegerField(
-        _("selling price (Rs.)"),
-        help_text=_("Price payable by customer (Rs.)"),
-    )
+    # price = models.PositiveSmallIntegerField(
+    #     _("selling price (Rs.)"),
+    #     help_text=_("Price payable by customer (Rs.)"),
+
+    # )
     description = models.TextField(
         _("descriptive write-up"),
         unique=True,
@@ -58,7 +59,7 @@ class Product(models.Model):
         super().save(*args, **kwargs)
 
     def __str__(self):
-        return f"{self.name} (Rs. {self.price})"
+        return f"{self.name} "
 
     class Meta:
         # Just to be explicit.
@@ -71,14 +72,23 @@ class Product(models.Model):
 class Sku(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     size = models.PositiveSmallIntegerField(
-        unique=False, validators=[MinValueValidator(1)]
+        unique=False, validators=[MinValueValidator(0)]
     )
-    price = models.DecimalField(_("price"), max_digits=10, decimal_places=2)
+    selling_price = models.DecimalField(
+        _("price"), max_digits=10, decimal_places=2, null=True, blank=True
+    )
+    platform_commission = models.PositiveBigIntegerField(null=True, blank=True)
+    cost_price = models.PositiveBigIntegerField(null=True, blank=True)
 
     class Meta:
         constraints = [
             UniqueConstraint(fields=["product", "size"], name="unique_product_size")
         ]
+
+    def save(self, *args, **kwargs):
+        if self.cost_price is not None and self.platform_commission is not None:
+            self.selling_price = self.cost_price + self.platform_commission
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return f"{self.product.name} - {self.size} gm"

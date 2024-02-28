@@ -7,7 +7,7 @@ class SkuSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Sku
-        fields = ["size", "price"]
+        fields = ["size", "selling_price"]
 
 
 class ProductListSerializer(serializers.ModelSerializer):
@@ -25,4 +25,4 @@ class ProductListSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Product
-        fields = ["name", "price", "is_refrigerated", "ingredients", "sku"]
+        fields = ["name", "is_refrigerated", "ingredients", "sku"]
