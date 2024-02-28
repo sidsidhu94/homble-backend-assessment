@@ -16,11 +16,16 @@ class Product(models.Model):
         unique=True,
         help_text=_("This will be displayed to user as-is"),
     )
+
+    """
+    Dropped the table price from products
+    """
     # price = models.PositiveSmallIntegerField(
     #     _("selling price (Rs.)"),
     #     help_text=_("Price payable by customer (Rs.)"),
 
     # )
+
     description = models.TextField(
         _("descriptive write-up"),
         unique=True,
@@ -74,6 +79,26 @@ class Sku(models.Model):
     size = models.PositiveSmallIntegerField(
         unique=False, validators=[MinValueValidator(0)]
     )
+    measurement_unit = models.CharField(
+        max_length=2,
+        choices=[
+            ("gm", "Grams"),
+            ("kg", "Kilograms"),
+            ("mL", "Milliliters"),
+            ("L", "Liters"),
+            ("pc", "Piece"),
+        ],
+        default="gm",
+    )
+    status = models.IntegerField(
+        choices=[
+            (0, "Pending for approval"),
+            (1, "Approved"),
+            (2, "Discontinued"),
+        ],
+        default=0,
+    )
+
     selling_price = models.DecimalField(
         _("price"), max_digits=10, decimal_places=2, null=True, blank=True
     )
@@ -92,3 +117,8 @@ class Sku(models.Model):
 
     def __str__(self):
         return f"{self.product.name} - {self.size} gm"
+
+    class Meta:
+        constraints = [
+            models.CheckConstraint(check=models.Q(size__lte=999), name="size_limit")
+        ]

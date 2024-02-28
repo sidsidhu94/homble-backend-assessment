@@ -49,14 +49,13 @@ class SkuAdmin(admin.ModelAdmin):
         "selling_price",
         "platform_commission",
         "cost_price",
+        "status",
     )
     ordering = ("id",)
+
     fields = (
-        "product",
-        "size",
-        "selling_price",
-        "platform_commission",
-        "cost_price",
-        "id",
+        ("product", "status"),
+        ("size", "selling_price", "platform_commission", "cost_price"),
+        ("id"),
     )
-    readonly_fields = ("id",)
+    readonly_fields = ("id", "selling_price")
