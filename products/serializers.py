@@ -7,11 +7,14 @@ class SkuCreateSerializer(serializers.ModelSerializer):
     """
     Serializer for creating Sku instances.
     """
+
     def validate(self, data):
         product = data["product"]
         size = data["size"]
         if Sku.objects.filter(product=product, size=size).exists():
-            raise serializers.ValidationError("A Sku with the same size for this product already exists.")
+            raise serializers.ValidationError(
+                "A Sku with the same size for this product already exists."
+            )
         return data
 
     class Meta:
@@ -31,7 +34,7 @@ class SkuSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Sku
-        fields = [ "size", "selling_price", "markup_percentage"]
+        fields = ["size", "selling_price", "markup_percentage"]
 
     def get_markup_percentage(self, obj):
         if obj.cost_price:
@@ -47,10 +50,9 @@ class ProductListSerializer(serializers.ModelSerializer):
 
     sku = serializers.SerializerMethodField()
 
-   
     def get_sku(self, obj):
 
-        sku_objects = obj.sku_set.filter(status = 1)
+        sku_objects = obj.sku_set.filter(status=1)
         sku_serializer = SkuSerializer(sku_objects, many=True)
         return sku_serializer.data
 
@@ -59,4 +61,14 @@ class ProductListSerializer(serializers.ModelSerializer):
         fields = ["name", "is_refrigerated", "ingredients", "sku"]
 
 
+class SkuListSerializer(serializers.ModelSerializer):
+    """
+    To show list of sku with category.
+    """
 
+    category = serializers.StringRelatedField(source="product.category")
+    product = ProductListSerializer()
+
+    class Meta:
+        model = Sku
+        fields = ["product", "size", "selling_price", "category"]

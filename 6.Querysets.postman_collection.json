@@ -1,0 +1,58 @@
+{
+	"info": {
+		"_postman_id": "627e6209-0b60-4b7f-9907-75f77effce07",
+		"name": "6.Querysets",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "30399316"
+	},
+	"item": [
+		{
+			"name": "all active categories including a count",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8000/products/active_categories/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"products",
+						"active_categories",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "all Skus including its category.",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8000/products/Skus_category/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"products",
+						"Skus_category",
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
